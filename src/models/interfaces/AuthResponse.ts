@@ -1,4 +1,4 @@
-import { User } from '../User';
+import { User } from '../db/User';
 
 export interface AuthResponse {
   user?: User;

@@ -1,4 +1,7 @@
 import { Server } from 'http';
+import { config as envConfig } from 'dotenv';
+
+envConfig();
 
 import startServer from './server';
 
@@ -23,7 +26,9 @@ try {
   }
 
   const firstStartInDevMode =
-    module.hot && process.env.LAST_EXIT_CODE === '0' && (!module.hot.data || !module.hot.data.hotReloaded);
+    module.hot &&
+    process.env.LAST_EXIT_CODE === '0' &&
+    (!module.hot.data || !module.hot.data.hotReloaded);
 
   startServer(PORT).then(serverInstance => {
     if (!module.hot || firstStartInDevMode) {

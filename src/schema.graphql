@@ -1,5 +1,6 @@
 type Query {
   hello(subject: String): String
+  me: User
 }
 
 type Mutation {
@@ -23,5 +24,5 @@ type AuthResponse {
 type User {
   email: String
   name: String
-  roles: [String]
+  roles: String
 }

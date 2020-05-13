@@ -4,16 +4,26 @@ import * as cors from 'cors';
 import * as express from 'express';
 
 import schema from './schema';
+import { buildContext } from './lib/context';
 
 import { execute, subscribe } from 'graphql';
 import { createServer, Server } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import * as url from 'url';
 
-type ExpressGraphQLOptionsFunction = (req?: express.Request, res?: express.Response) => any | Promise<any>;
+type ExpressGraphQLOptionsFunction = (
+  req?: express.Request,
+  res?: express.Response
+) => any | Promise<any>;
 
-function graphiqlExpress(options: GraphiQL.GraphiQLData | ExpressGraphQLOptionsFunction) {
-  const graphiqlHandler = (req: express.Request, res: express.Response, next: any) => {
+function graphiqlExpress(
+  options: GraphiQL.GraphiQLData | ExpressGraphQLOptionsFunction
+) {
+  const graphiqlHandler = (
+    req: express.Request,
+    res: express.Response,
+    next: any
+  ) => {
     const query = req.url && url.parse(req.url, true).query;
     GraphiQL.resolveGraphiQLString(query, options, req).then(
       (graphiqlString: any) => {
@@ -37,7 +47,8 @@ export default async (port: number): Promise<Server> => {
 
   const apolloServer = new ApolloServer({
     playground: false,
-    schema
+    schema,
+    context: buildContext
   });
 
   apolloServer.applyMiddleware({ app, path: '/graphql' });
