@@ -20,7 +20,7 @@ export class User extends Model {
 User.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
@@ -45,7 +45,6 @@ User.init(
 );
 
 const encryptPassword = (user: User) => {
-  console.log(user);
   if (user.changed('password')) {
     const salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(user.password, salt);
