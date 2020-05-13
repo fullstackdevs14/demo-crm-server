@@ -1,3 +1,27 @@
 type Query {
   hello(subject: String): String
 }
+
+type Mutation {
+  """
+  Register User
+  """
+  createUser(email: String!, password: String!, name: String!): AuthResponse
+  """
+  Login user
+  """
+  login(email: String!, password: String!): AuthResponse
+}
+
+type AuthResponse {
+  """ Registered user """
+  user: User
+  """ Generated token """
+  token: String
+}
+
+type User {
+  email: String
+  name: String
+  roles: [String]
+}
